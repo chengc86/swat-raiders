@@ -205,7 +205,7 @@
         </div>
       </div>
     </div>
-    <div class="hint" id="hint"><kbd>Space</kbd> wave · <kbd>1-5</kbd> unit · <kbd>Esc</kbd> cancel · <kbd>S</kbd> sell · <kbd>F</kbd> auto-cam · scroll to zoom · right-drag to pan</div>
+    <div class="hint" id="hint"><kbd>Space</kbd> wave · <kbd>1-9</kbd> unit · <kbd>Esc</kbd> cancel · <kbd>S</kbd> sell · <kbd>F</kbd> auto-cam · scroll to zoom · right-drag to pan</div>
   </div>
 
   <div id="side">
@@ -316,6 +316,25 @@ const TOWERS = {
         {n:"Full Auto",  c:650, d:"+120% fire rate, 3 rounds per shot", a:t=>{t.rate*=2.2;t.shots=3}},
       ]},
     ]},
+  k9: {
+    name:"K-9 Unit", icon:"\ud83d\udc15", cost:250, color:"#7a5a3a", barrel:"#d8c4a0",
+    blurb:"Slips a dog down the road. The bite is light \u2014 4 damage \u2014 but it knocks the target off its feet, and a dog does not need to see a Terrorist to smell one.",
+    dmg:4, rate:0.45, range:200, dogs:true, dogSpeed:165, dogLeash:215, stun:0.5, detect:true,
+    paths:[
+      {name:"Kennel", tiers:[
+        {n:"Second Dog",  c:220, d:"Sends 2 dogs at a time", a:t=>{t.shots=2}},
+        {n:"Fast Recall", c:420, d:"Dogs run 40% faster and go out 60% more often",
+          a:t=>{t.dogSpeed*=1.4;t.rate*=1.6}},
+        {n:"Full Kennel", c:1100,d:"4 dogs at a time, out twice as often, +2 damage (6 a bite)",
+          a:t=>{t.shots=4;t.rate*=2;t.dmg+=2}},
+      ]},
+      {name:"Tracking", tiers:[
+        {n:"Longer Leash", c:200, d:"Dogs range 60% further down the road", a:t=>{t.dogLeash*=1.6}},
+        {n:"Take Down",    c:400, d:"The bite pins them for 1.2s instead of 0.5s", a:t=>{t.stun=1.2}},
+        {n:"Scent Marking",c:1000,d:"Bitten baddies take 60% more damage from EVERYTHING for 3s, and stay down 1.8s",
+          a:t=>{t.mark=1.6;t.stun=1.8}},
+      ]},
+    ]},
   sniper: {
     name:"Sniper", icon:`<svg viewBox='0 0 512 512' width='26' height='26' aria-hidden='true'><circle cx='256' cy='256' r='168' fill='none' stroke='#cfe0f0' stroke-width='22'/><rect x='234' y='14' width='44' height='96' rx='22' fill='#7cb342'/><rect x='14' y='234' width='96' height='44' rx='22' fill='#7cb342'/><rect x='402' y='234' width='96' height='44' rx='22' fill='#33691e'/><rect x='234' y='402' width='44' height='96' rx='22' fill='#33691e'/><g transform='rotate(-42 256 256)'><rect x='268' y='240' width='214' height='26' rx='6' fill='#3e3d4d'/><rect x='452' y='232' width='36' height='42' rx='10' fill='#3e3d4d'/><path d='M92 244h206v58H196l-34 44H92z' fill='#c08a3e'/><path d='M92 244h206v14H92z' fill='#e0c25c'/><rect x='40' y='250' width='64' height='96' rx='12' fill='#3e3d4d'/><circle cx='236' cy='330' r='30' fill='none' stroke='#3e3d4d' stroke-width='14'/><rect x='214' y='176' width='150' height='40' rx='14' fill='#3e3d4d'/><rect x='330' y='168' width='40' height='56' rx='12' fill='#c08a3e'/><rect x='240' y='206' width='26' height='44' rx='8' fill='#4a6b2f'/><rect x='300' y='206' width='26' height='44' rx='8' fill='#4a6b2f'/></g></svg>`, cost:300, color:"#3d6b4a", barrel:"#cfe3d5",
     blurb:"Shoots anywhere on the map. 25 damage every 2 seconds. Can hit Terrorists.",
@@ -330,6 +349,49 @@ const TOWERS = {
         {n:"Fast Bolt",   c:180, d:"+60% fire rate", a:t=>{t.rate*=1.6}},
         {n:"Semi-Auto",   c:380, d:"Fires 2 rounds per shot", a:t=>{t.shots=2}},
         {n:"Rapid Overwatch", c:850, d:"+120% fire rate", a:t=>{t.rate*=2.2}},
+      ]},
+    ]},
+  sheriff: {
+    name:"Sheriff", icon:`<svg viewBox='0 0 512 512' width='27' height='27' aria-hidden='true'><path d='M256 8l50 72 85-25-25 85 72 50-72 50 25 85-85-25-50 72-50-72-85 25 25-85-72-50 72-50-25-85 85 25z' fill='#c8912a'/><path d='M256 8l50 72 85-25-25 85 72 50-60 42V178z' fill='#f0c85a'/><circle cx='256' cy='256' r='118' fill='#c98a45'/><path d='M256 138c65 0 118 53 118 118 0 13-2 26-7 38-18-8-25-30-47-30-22 0-26 21-47 21s-25-21-47-21c-22 0-29 22-47 30-5-12-7-25-7-38 0-65 53-118 118-118z' fill='#ef6ea1'/><circle cx='256' cy='256' r='38' fill='#0c1119'/><rect x='206' y='166' width='8' height='20' rx='4' fill='#ffffff' transform='rotate(-24 210 176)'/><rect x='292' y='176' width='8' height='20' rx='4' fill='#7de3ff' transform='rotate(30 296 186)'/><rect x='250' y='152' width='8' height='20' rx='4' fill='#8fe6a0' transform='rotate(4 254 162)'/></svg>`, cost:300, color:"#c98a45", barrel:"#f0c85a", auraCol:"#ef6ea1",
+    blurb:"Does no shooting of his own. Hands out donuts \u2014 every unit inside his aura shoots faster and reaches further.",
+    dmg:0, rate:1, range:112, support:true, donut:true,
+    buffRate:.20, buffRange:.20,
+    paths:[
+      {name:"Coffee Run", tiers:[
+        {n:"Fresh Batch",   c:260, d:"Allies fire +35% faster instead of +20%", a:t=>{t.buffRate=.35}},
+        {n:"Double Glazed", c:540, d:"Allies fire +55% faster, and the aura grows by 20",
+          a:t=>{t.buffRate=.55;t.range+=20}},
+        {n:"Baker's Dozen", c:1500,d:"Allies fire +90% faster and hit 20% harder",
+          a:t=>{t.buffRate=.90;t.buffDmg=.20}},
+      ]},
+      {name:"Long Arm of the Law", tiers:[
+        {n:"Wider Beat",  c:240, d:"Allies get +35% range, and the aura grows by 30",
+          a:t=>{t.buffRange=.35;t.range+=30}},
+        {n:"County Line", c:520, d:"Allies get +60% range, and the aura grows by 30 more",
+          a:t=>{t.buffRange=.60;t.range+=30}},
+        {n:"Statewide Jurisdiction", c:1400, d:"Allies get +110% range, an enormous aura, and can hit Terrorists",
+          a:t=>{t.buffRange=1.10;t.range+=60;t.buffDetect=true}},
+      ]},
+    ]},
+  spikes: {
+    name:"Spike Strip Car", icon:`<svg viewBox='0 0 512 512' width='27' height='27' aria-hidden='true'><rect x='96' y='34' width='120' height='30' rx='14' fill='#c8202f'/><rect x='216' y='34' width='120' height='30' rx='14' fill='#2f6fd0'/><path d='M40 300c0-30 22-52 52-52h328c30 0 52 22 52 52v54c0 16-12 28-28 28H68c-16 0-28-12-28-28z' fill='#2f5f8f'/><path d='M108 248l44-74c8-14 22-22 38-22h132c16 0 30 8 38 22l44 74z' fill='#e6eef7'/><path d='M132 240l32-56c5-9 13-14 23-14h58v70z' fill='#7fb2e0'/><path d='M380 240l-32-56c-5-9-13-14-23-14h-58v70z' fill='#7fb2e0'/><rect x='40' y='300' width='432' height='22' fill='#e6eef7'/><circle cx='130' cy='388' r='46' fill='#1a1d22'/><circle cx='130' cy='388' r='20' fill='#5b6470'/><circle cx='382' cy='388' r='46' fill='#1a1d22'/><circle cx='382' cy='388' r='20' fill='#5b6470'/><rect x='196' y='92' width='120' height='26' rx='12' fill='#3a4553'/><path d='M150 452h212l-16 34H166z' fill='#59606b'/><path d='M166 452l10-22h160l10 22z' fill='#8b939f'/></svg>`, cost:220, color:"#2f5f8f", barrel:"#e6eef7",
+    blurb:"Parks on the grass and throws a spike strip across the road. One baddy runs over it \u2014 it hurts them a little and leaves them crawling \u2014 and the strip is wrecked. The car lays a fresh one every 5 seconds. Upgrade it to keep several strips down at once.",
+    dmg:12, rate:1, range:170, stripCar:true, regen:5, charges:1, maxStrips:1,
+    stripSlow:.55, stripSlowT:2.0, stripVs:{biker:2.5, van:2.5},
+    paths:[
+      {name:"Spike Belt", tiers:[
+        {n:"Second Strip", c:240, d:"Keeps 2 strips on the road at once", a:t=>{t.maxStrips=2}},
+        {n:"Quick Hands",  c:480, d:"3 strips at once, and a fresh one every 3s",
+          a:t=>{t.maxStrips=3;t.regen=3}},
+        {n:"Roadblock",    c:1200,d:"5 strips at once, and a fresh one every 1.5s",
+          a:t=>{t.maxStrips=5;t.regen=1.5}},
+      ]},
+      {name:"Teeth", tiers:[
+        {n:"Sharper Teeth",  c:200, d:"+8 damage a crossing (20)", a:t=>{t.dmg+=8}},
+        {n:"Caltrops",       c:420, d:"+20 damage (40), and they crawl slower for longer (70% for 2.6s)",
+          a:t=>{t.dmg+=20;t.stripSlow=.70;t.stripSlowT=2.6}},
+        {n:"Dragon's Teeth", c:1100,d:"+60 damage (100), and the crawl lasts a full 4s",
+          a:t=>{t.dmg+=60;t.stripSlowT=4.0}},
       ]},
     ]},
   commander: {
@@ -674,6 +736,8 @@ const SFX = {
   leak:()=>beep(90,.35,'sawtooth',.07),
   boss:()=>{beep(70,.5,'sawtooth',.09); setTimeout(()=>beep(55,.7,'sawtooth',.09),260)},
   nope:()=>beep(160,.12,'square',.03),
+  bark:()=>{beep(300,.05,'square',.03); setTimeout(()=>beep(210,.07,'square',.025),55)},
+  clatter:()=>beep(240,.07,'sawtooth',.028),
   punch:()=>{beep(150,.09,'square',.055); setTimeout(()=>beep(80,.18,'sawtooth',.045),40)},
 };
 
@@ -682,7 +746,7 @@ const SFX = {
    ============================================================ */
 const G = {
   mode:'menu', cash:200, integ:100, wave:0, running:false, over:false, nextId:1,
-  enemies:[], towers:[], bullets:[], fx:[], parts:[], army:[], queue:[], qt:0, gore:true,
+  enemies:[], towers:[], bullets:[], fx:[], parts:[], army:[], strips:[], queue:[], qt:0, gore:true,
   speed:1, paused:false, sel:null, place:null, time:0,
   bossEsc:0, repairs:0, boss:null, globalDetect:false, hover:null, mouse:{x:0,y:0}, kills:0, leaked:0,
 };
@@ -702,8 +766,12 @@ function pathDistNear(x,y){
 function makeTower(key, cx, cy){
   const t = {id:G.nextId++, owner:0, key, def:TOWERS[key], cx, cy, x:(cx+.5)*CS, y:(cy+.5)*CS,
              up:[0,0], cd:0, ang:-Math.PI/2, spent:TOWERS[key].cost,
-             bDmg:0, bRate:0, bDet:false, disabled:0, tmr1:0, tmr2:0, swing:0, target:'first', kills:0};
+             bDmg:0, bRate:0, bRange:0, bDet:false, disabled:0, tmr1:0, tmr2:0, swing:0, target:'first', kills:0};
   t.pathD = pathDistNear(t.x,t.y);
+  t.roadAng = posAt(t.pathD).ang;          // vehicles park parallel to the kerb
+  /* Support units never acquire a target on their own, so point them at the
+     road from the start rather than leaving them staring at the sky. */
+  if(TOWERS[key].support){ const q=posAt(t.pathD); t.ang=Math.atan2(q.y-t.y, q.x-t.x); }
   recalc(t); return t;
 }
 function recalc(t){
@@ -711,9 +779,12 @@ function recalc(t){
   Object.assign(t,{dmg:d.dmg,rate:d.rate,range:d.range,bspeed:d.bspeed||600,
     splash:d.splash||0, chain:d.chain||0, slow:d.slow||0, slowT:d.slowT||1,
     burn:0, burnT:2, pierce:!!d.pierce, detect:!!d.detect, shots:1, multi:1, punch:0,
-    crit:0, critMul:2, bossMul:1, mark:0, stun:0, income:0, bounty:0, weakVs:d.weakVs||null,
+    crit:0, critMul:2, bossMul:1, mark:d.mark||0, stun:d.stun||0, income:0, bounty:0, weakVs:d.weakVs||null,
+    stripCar:!!d.stripCar, regen:d.regen||5, charges:d.charges||1, maxStrips:d.maxStrips||1,
+    stripSlow:d.stripSlow||0, stripSlowT:d.stripSlowT||2, stripVs:d.stripVs||null,
+    dogs:!!d.dogs, dogSpeed:d.dogSpeed||160, dogLeash:d.dogLeash||210,
     globalDetect:false, buffDetect:!!d.buffDetect, airstrike:0, lockdown:0, pool:false,
-    buffDmg:d.buffDmg||0, buffRate:d.buffRate||0, support:!!d.support, hitscan:!!d.hitscan, arc:!!d.arc,
+    buffDmg:d.buffDmg||0, buffRate:d.buffRate||0, buffRange:d.buffRange||0, support:!!d.support, hitscan:!!d.hitscan, arc:!!d.arc,
     heroPunch:!!d.heroPunch, punchR:d.punchR||0, punchStun:0,
     spawner:!!d.spawner, manSpeed:d.manSpeed||78, manPierce:d.manPierce||1});
   for(let p=0;p<2;p++) for(let i=0;i<t.up[p];i++) d.paths[p].tiers[i].a(t);
@@ -733,7 +804,7 @@ function unitCost(key){
 
 /* ---------- buffs from Comms Officers ---------- */
 function applyBuffs(){
-  for(const t of G.towers){ t.bDmg=0; t.bRate=0; t.bDet=false; }
+  for(const t of G.towers){ t.bDmg=0; t.bRate=0; t.bRange=0; t.bDet=false; }
   G.globalDetect=false;
   for(const s of G.towers){
     if(s.globalDetect) G.globalDetect=true;
@@ -742,6 +813,7 @@ function applyBuffs(){
       if(t===s) continue;
       if(Math.hypot(t.x-s.x,t.y-s.y)<=s.range){
         t.bDmg=Math.max(t.bDmg,s.buffDmg); t.bRate=Math.max(t.bRate,s.buffRate);
+        t.bRange=Math.max(t.bRange,s.buffRange||0);
         if(s.buffDetect) t.bDet=true;
       }
     }
@@ -749,6 +821,9 @@ function applyBuffs(){
 }
 const eDmg=t=>t.dmg*(1+t.bDmg);
 const eRate=t=>t.rate*(1+t.bRate);
+/* A unit's reach after any Sheriff aura it happens to be standing in. Aura
+   radii themselves use the raw t.range, so Sheriffs never widen each other. */
+const eRange=t=>t.range*(1+(t.bRange||0));
 
 /* ============================================================
    ENEMIES
@@ -813,7 +888,7 @@ function hurt(e, amt, o){
   return dmg;
 }
 function bountyAt(x,y){
-  let b=0; for(const t of G.towers) if(t.bounty && Math.hypot(t.x-x,t.y-y)<=t.range) b=Math.max(b,t.bounty);
+  let b=0; for(const t of G.towers) if(t.bounty && Math.hypot(t.x-x,t.y-y)<=eRange(t)) b=Math.max(b,t.bounty);
   return b;
 }
 function kill(e,src){
@@ -929,7 +1004,7 @@ function pickTargets(t){
     if(!e.alive||e.flee) continue;
     if(!visible(e,t)) continue;
     const p=epos(e);
-    if(Math.hypot(p.x-t.x,p.y-t.y)<=t.range) out.push({e,p});
+    if(Math.hypot(p.x-t.x,p.y-t.y)<=eRange(t)) out.push({e,p});
   }
   if(!out.length) return out;
   const m=t.target;
@@ -942,6 +1017,102 @@ function pickTargets(t){
   if(m!=='strong'){ const b=out.find(o=>o.e.boss); if(b && t.bossMul>1) return [b,...out.filter(o=>o!==b)]; }
   return out;
 }
+/* ------------------------------------------------------------
+   SPIKE STRIPS
+   A strip is not a unit — it is a single-use thing lying on the
+   road. The first baddy over it gets hurt and hobbled, and the
+   strip is finished; the car simply lays another. Getting
+   stronger means keeping more of them down, not making one
+   nastier.
+   ------------------------------------------------------------ */
+const STRIP_R = 21;                       // how far either side of the line it catches
+function layStrip(t){
+  const mine=G.strips.filter(s=>s.src===t);
+  if(mine.length>=t.maxStrips) return;
+  if(CELLDIST[t.cy][t.cx] > eRange(t)) return;      // parked too far from the road to reach it
+  /* spread the extra strips along the road instead of stacking them */
+  let d=t.pathD;
+  for(let i=1; i<=10 && mine.some(o=>Math.abs(o.d-d)<32); i++)
+    d = t.pathD + (i%2?1:-1)*32*Math.ceil(i/2);
+  d = clamp(d, 6, PATH_LEN-6);
+  const p=posAt(d);
+  G.strips.push({src:t, d, x:p.x, y:p.y, ang:p.ang, left:t.charges, max:t.charges, born:G.time});
+  fx({type:'puff',x:p.x,y:p.y,r:13,t:0,max:.3,col:'#c3ccd8'});
+  SFX.clatter();
+}
+function updateStrips(){
+  for(const s of G.strips){
+    if(s.left<=0) continue;
+    for(const e of G.enemies){
+      if(!e.alive||e.flee) continue;
+      const q=epos(e);
+      if(Math.hypot(q.x-s.x, q.y-s.y) > e.r+STRIP_R) continue;
+      const t=s.src;
+      let dmg=eDmg(t);
+      if(t.stripVs && t.stripVs[e.type]) dmg *= t.stripVs[e.type];   // tyres pop
+      hurt(e, dmg, {pierce:true, src:t});                            // spikes go through armour
+      if(t.stripSlow){
+        e.slow=Math.max(e.slow, t.stripSlow);
+        e.slowU=Math.max(e.slowU, G.time+t.stripSlowT);
+      }
+      fx({type:'puff',x:s.x,y:s.y,r:14,t:0,max:.28,col:'#e8d9a8'});
+      SFX.clatter();
+      s.left--;                       // one crossing is all a strip has in it
+      break;
+    }
+  }
+  G.strips=G.strips.filter(s=>s.left>0);
+}
+/* ------------------------------------------------------------
+   K-9
+   The dog runs out along the road, bites the first thing it
+   reaches and trots home. The bite barely scratches — the point
+   is that whoever it lands on stops moving, and a dog finds a
+   Terrorist by nose, so stealth means nothing to it.
+   ------------------------------------------------------------ */
+function sendDogs(t){
+  if(G.army.length>240) return;
+  const n=Math.max(1,t.shots);
+  for(let i=0;i<n;i++)
+    G.army.push({dog:true, d:t.pathD, home:t.pathD, leash:t.dogLeash, spd:t.dogSpeed,
+                 dmg:eDmg(t), src:t, off:rnd(-11,11)+i*3, ph:Math.random(), alive:true,
+                 back:false, hold:0});
+  SFX.bark();
+}
+function updateDog(a,dt){
+  /* a beat spent worrying the target — otherwise a dog that bites the moment
+     it leaves the handler is home again inside a single frame, and the player
+     never sees the animal they paid for */
+  if(a.hold>G.time){
+    const p=posAt(a.d);
+    a.x=p.x - Math.sin(p.ang)*a.off; a.y=p.y + Math.cos(p.ang)*a.off; a.ang=p.ang;
+    return;
+  }
+  if(a.back){
+    a.d += a.spd*dt;
+    if(a.d>=a.home){ a.alive=false; return; }       // home, and off the clock
+  } else {
+    a.d -= a.spd*dt;
+    if(a.d<=0 || a.home-a.d > a.leash) a.back=true; // end of the leash, nothing found
+  }
+  const p=posAt(a.d);
+  a.x=p.x - Math.sin(p.ang)*a.off; a.y=p.y + Math.cos(p.ang)*a.off; a.ang=p.ang;
+  if(a.back) return;
+  for(const e of G.enemies){
+    if(!e.alive||e.flee) continue;                  // no stealth check: the dog smells them
+    const q=epos(e);
+    if(Math.hypot(a.x-q.x, a.y-q.y) > e.r+9) continue;
+    const t=a.src;
+    hurt(e, a.dmg, {src:t});
+    if(t.stun) e.stunU=Math.max(e.stunU, G.time+t.stun);
+    if(t.mark){ e.markMul=Math.max(e.markMul, t.mark); e.markU=G.time+3; }
+    fx({type:'puff',x:a.x,y:a.y,r:9,t:0,max:.25,col:'#e8dcc0'});
+    SFX.bark();
+    a.hold=G.time+.4;                               // hang on to him for a moment
+    a.back=true;                                    // then trot home, good dog
+    break;
+  }
+}
 function sendArmy(t){
   if(G.army.length>240) return;
   const n=Math.max(1,t.shots);
@@ -953,6 +1124,7 @@ function sendArmy(t){
 }
 function updateArmy(dt){
   for(const a of G.army){
+    if(a.dog){ updateDog(a,dt); continue; }
     a.d -= a.spd*dt;
     if(a.d<=0){                                   // made it the whole way — he brings back a dollar
       a.alive=false; G.cash += 1;
@@ -1016,7 +1188,11 @@ function updateTowers(dt){
   applyBuffs();
   for(const t of G.towers){
     if(t.support){
-      if(t.heroPunch && t.disabled<=G.time) heroPunch(t,dt);
+      if(t.heroPunch){ if(t.disabled<=G.time) heroPunch(t,dt); }
+      else {                                  // no weapon — he just keeps an eye on the road
+        const watch=pickTargets(t);
+        if(watch.length) t.ang=Math.atan2(watch[0].p.y-t.y, watch[0].p.x-t.x);
+      }
       continue;
     }
     if(t.spawner){
@@ -1025,12 +1201,27 @@ function updateTowers(dt){
       if(t.cd<=0){ t.cd=1; t.ang=Math.PI; sendArmy(t); }
       continue;
     }
+    /* The car does not shoot. It throws a strip across the road, waits for
+       someone to run over it, and throws another. It keeps laying between
+       waves too, so the road is already dressed when the gate opens. */
+    if(t.stripCar){
+      if(t.disabled>G.time) continue;
+      t.tmr1-=dt;
+      if(t.tmr1<=0){ t.tmr1=t.regen; layStrip(t); }
+      continue;
+    }
+    if(t.dogs){
+      if(t.disabled>G.time || !G.running) continue;   // the dogs stay in the van between waves
+      t.cd -= dt*eRate(t);
+      if(t.cd<=0){ t.cd=1; sendDogs(t); }
+      continue;
+    }
     if(t.disabled>G.time){ continue; }
     // special timed abilities
     if(t.airstrike){ t.tmr1-=dt; if(t.tmr1<=0 && G.enemies.length){ t.tmr1=t.airstrike; airstrike(t); } }
     if(t.lockdown){ t.tmr2-=dt; if(t.tmr2<=0){ t.tmr2=t.lockdown; const hits=pickTargets(t);
       if(hits.length){ for(const h of hits) h.e.stunU=Math.max(h.e.stunU,G.time+1.6);
-        fx({type:'ring',x:t.x,y:t.y,r:t.range,t:0,max:.6,col:'#b17dff'}); } } }
+        fx({type:'ring',x:t.x,y:t.y,r:eRange(t),t:0,max:.6,col:'#b17dff'}); } } }
     if(t.flash>0) t.flash=Math.max(0,t.flash-dt*9);
     t.cd -= dt*eRate(t);
     const tg=pickTargets(t);
@@ -1264,7 +1455,8 @@ function tryPlace(c,r,keyIn){
   G.towers.push(t);
   SFX.place();
   log(`${MP.on?'P'+(t.owner+1)+' ':''}${TOWERS[key].name} deployed. <b>-$${cost}</b>`);
-  if(CELLDIST[r][c] >= t.range){
+  applyBuffs();
+  if(CELLDIST[r][c] >= eRange(t)){
     toast('That spot is out of reach of the road — move him closer');
     log(`${TOWERS[key].name} is too far from the road to hit anything.`,'bad');
   }
@@ -1316,6 +1508,10 @@ function updateCam(dt){
   camClamp();
 }
 /* ---------- colour helpers ---------- */
+function hexA(hex,a){
+  const n=parseInt(hex.slice(1),16);
+  return 'rgba('+(n>>16&255)+','+(n>>8&255)+','+(n&255)+','+a+')';
+}
 function shade(hex,a){
   const n=parseInt(hex.slice(1),16); let r=n>>16&255,g=n>>8&255,b=n&255;
   if(a<0){ const f=1+a; r*=f; g*=f; b*=f; } else { r+=(255-r)*a; g+=(255-g)*a; b+=(255-b)*a; }
@@ -1364,6 +1560,14 @@ function gunSprite(c,type,flash){
     c.fillStyle='#b5843f'; c.fill();
     c.fillStyle='rgba(255,255,255,.20)'; c.fillRect(12,-3.4,13,1.5);
     c.fillStyle='rgba(0,0,0,.22)'; c.fillRect(12,2,13,1.5);
+  } else if(type==='donut'){
+    c.fillStyle='#b87b3c'; c.beginPath(); c.arc(7.4,0,5.9,0,7); c.fill();
+    c.fillStyle='#ef6ea1'; c.beginPath(); c.arc(7.4,-.7,5.4,0,7); c.fill();
+    c.fillStyle='#f79ec0'; c.beginPath(); c.arc(6.2,-2.2,2.4,0,7); c.fill();
+    c.fillStyle='#8a5a29'; c.beginPath(); c.arc(7.4,0,2,0,7); c.fill();
+    c.fillStyle='#fff';    c.fillRect(4.9,-3.6,1.7,.9);
+    c.fillStyle='#7de3ff'; c.fillRect(8.6,-2.8,1.7,.9);
+    c.fillStyle='#8fe6a0'; c.fillRect(6.4,1.5,1.7,.9);
   } else if(type==='taser'){
     c.fillStyle='#2a2438'; c.fillRect(0,-2,10,4); c.fillRect(2,1.4,3,4.4);
     c.fillStyle='#b17dff'; c.fillRect(9,-1.4,3,2.8);
@@ -1446,6 +1650,13 @@ function person(c,x,y,o){
     c.fillStyle='rgba(255,255,255,.16)'; c.beginPath(); c.arc(hx-1.6,-33.6,3.4,Math.PI*1.1,Math.PI*1.75); c.fill();
     if(o.visor){ c.fillStyle='rgba(30,40,55,.85)'; c.beginPath(); c.roundRect(hx-5.2,-31.4,10.4,4.2,1.6); c.fill();
       c.fillStyle='rgba(150,200,255,.28)'; c.fillRect(hx-4.6,-31,4,1.4); }
+  } else if(o.brim){                                 // wide-brimmed sheriff's hat
+    c.fillStyle=shade(o.brim,-.3);
+    c.beginPath(); c.ellipse(hx,-33.1,9.3,2.7,0,0,7); c.fill();
+    c.fillStyle=o.brim;
+    c.beginPath(); c.ellipse(hx,-35.2,4.7,3.6,0,0,7); c.fill();
+    c.fillStyle=shade(o.brim,-.5); c.fillRect(hx-4.7,-34.6,9.4,1.5);
+    c.fillStyle=o.emblem||'#ffd45e'; c.beginPath(); c.arc(hx,-33.9,1.1,0,7); c.fill();
   } else if(o.cap){
     c.fillStyle=o.cap; c.beginPath(); c.arc(hx,-33,5.6,Math.PI,0); c.fill();
     c.fillRect(hx-5.6,-33.4,11.2,2.4);
@@ -1675,11 +1886,15 @@ const TLOOK = {
   nade:   {cloth:'#4a4630',pants:'#2f2d21',skin:'#bd8a5f',vest:'#3a3625',pouch:true,gun:'launcher',belt:true,s:1.05},
   taser:  {cloth:'#2b2438',pants:'#1f1b29',skin:'#c2905f',vest:'#352c46',helmet:'#2a2438',visor:true,gun:'taser',shield:true,belt:true,s:1.02},
   comms:  {cloth:'#3a2630',pants:'#241a1f',skin:'#c8996b',vest:'#4a2f3a',cap:'#2c1e25',gun:null,pack:true,belt:true,s:1},
+  sheriff:{cloth:'#9a7742',pants:'#4e3c22',skin:'#c8996b',brim:'#6d5027',
+           emblem:'#ffd45e',beltCol:'#43301a',gun:'donut',belt:true,s:1.06},
+  k9:     {cloth:'#3a4a35',pants:'#232a20',skin:'#c8996b',cap:'#2c3527',gun:'pistol',belt:true,pouch:true,s:1},
   commander:{cloth:'#5c6b3a',pants:'#3a4227',skin:'#c8996b',cap:'#47522c',vest:'#4a5530',pouch:true,gun:null,belt:true,pack:true,s:1.05},
 };
 
 const ARMYMAN = {cloth:'#66753e',pants:'#3d4526',skin:'#c39268',helmet:'#4d5930',gun:'rifle',belt:true,s:0.62};
 function drawArmy(a){
+  if(a.dog){ drawDog(a); return; }
   person(X, a.x, a.y+4, Object.assign({}, ARMYMAN, {
     aim: a.ang + Math.PI,           // they march against the traffic
     ph: (a.ph += 0.055), moving: true
@@ -1735,8 +1950,72 @@ function drawTank(t,ghost){
   }
   X.restore();
 }
+/* ---------- the spike strip car, its strips, and the dog ---------- */
+function drawStripCar(t,ghost){
+  const ga=ghost?.6:1, on=Math.floor(G.time*4)%2;
+  if(!ghost){                                     // the bar throws colour onto the grass
+    X.save(); X.globalAlpha=.13; X.fillStyle=on?'#ff3348':'#3f86e8';
+    X.beginPath(); X.ellipse(t.x,t.y+2,30,17,0,0,7); X.fill(); X.restore();
+  }
+  X.save(); X.translate(t.x,t.y); X.rotate(t.roadAng||0); X.globalAlpha=ga;
+  X.fillStyle='rgba(0,0,0,.4)'; X.beginPath(); X.ellipse(2,4,22,11,0,0,7); X.fill();
+  X.fillStyle='#0e1114';                                            // tyres
+  X.beginPath(); X.roundRect(-12,-11.5,7,23,2); X.fill();
+  X.beginPath(); X.roundRect(6,-11.5,7,23,2); X.fill();
+  const g=X.createLinearGradient(0,-11,0,11);
+  g.addColorStop(0,'#f2f6fb'); g.addColorStop(.5,'#dbe3ed'); g.addColorStop(1,'#aeb9c8');
+  X.fillStyle=g; X.beginPath(); X.roundRect(-20,-10.5,40,21,5); X.fill();
+  X.fillStyle='#2f5f8f'; X.fillRect(-20,-3,40,6);                   // the blue flank stripe
+  X.fillStyle='rgba(255,255,255,.10)'; X.fillRect(-20,-10.5,40,3);
+  X.fillStyle='#12161b'; X.beginPath(); X.roundRect(5,-8.5,10,17,2); X.fill();     // windscreen
+  X.fillStyle='rgba(150,190,230,.28)'; X.beginPath(); X.roundRect(6,-7.5,4,15,1.5); X.fill();
+  X.fillStyle='#12161b'; X.beginPath(); X.roundRect(-14,-8,7,16,2); X.fill();      // rear window
+  X.fillStyle=on?'#ff3348':'#5c1420'; X.beginPath(); X.roundRect(-3.5,-9.5,7,9,2.5); X.fill();
+  X.fillStyle=on?'#14243f':'#3f86e8'; X.beginPath(); X.roundRect(-3.5,.5,7,9,2.5); X.fill();
+  X.fillStyle='#ffe9a8'; X.beginPath(); X.arc(19,-6.5,2.1,0,7); X.arc(19,6.5,2.1,0,7); X.fill();
+  X.fillStyle='#3a4553'; X.beginPath(); X.roundRect(-9,-4,5,8,1.5); X.fill();      // spare strips on the roof
+  X.fillStyle='#cfd8e4';
+  for(let i=-1;i<=1;i++){ X.beginPath(); X.moveTo(-9,i*2.6-.9); X.lineTo(-11.6,i*2.6); X.lineTo(-9,i*2.6+.9); X.closePath(); X.fill(); }
+  X.restore(); X.globalAlpha=1;
+}
+function drawStrip(s){
+  X.save(); X.translate(s.x,s.y); X.rotate(s.ang);
+  X.fillStyle='rgba(0,0,0,.34)'; X.beginPath(); X.roundRect(-3.4,-19,8,38,3); X.fill();
+  X.fillStyle='#3a4553'; X.beginPath(); X.roundRect(-2.6,-19,5.2,38,2.4); X.fill();
+  X.fillStyle='#e2e9f2';
+  for(let i=-3;i<=3;i++){
+    const y=i*5.4;
+    X.beginPath(); X.moveTo(-2.6,y-2.2); X.lineTo(-7.4,y); X.lineTo(-2.6,y+2.2); X.closePath(); X.fill();
+    X.beginPath(); X.moveTo( 2.6,y-2.2); X.lineTo( 7.4,y); X.lineTo( 2.6,y+2.2); X.closePath(); X.fill();
+  }
+  X.fillStyle='rgba(255,204,77,.75)';                       // a glint so it reads on tarmac
+  X.beginPath(); X.roundRect(-1.2,-19,2.4,38,1.2); X.fill();
+  X.restore();
+}
+function drawDog(a){
+  const face = a.back ? a.ang : a.ang+Math.PI;
+  const ph=(a.ph+=.24), sw=Math.sin(ph)*2.2;
+  X.save(); X.translate(a.x,a.y+2); X.rotate(face);
+  X.fillStyle='rgba(0,0,0,.32)'; X.beginPath(); X.ellipse(0,4,10,4,0,0,7); X.fill();
+  X.strokeStyle='#5a3f26'; X.lineWidth=2.2; X.lineCap='round';
+  X.beginPath();
+  X.moveTo(-4,1); X.lineTo(-5+sw,6); X.moveTo(4,1); X.lineTo(5-sw,6);
+  X.moveTo(-2,1); X.lineTo(-3-sw,6); X.moveTo(6,1); X.lineTo(7+sw,6);
+  X.stroke();
+  X.fillStyle='#7a5433'; X.beginPath(); X.ellipse(0,0,9,5,0,0,7); X.fill();
+  X.fillStyle='#3a2a1c'; X.beginPath(); X.ellipse(-1,-1.4,7,3,0,0,7); X.fill();
+  X.strokeStyle='#7a5433'; X.lineWidth=1.8;
+  X.beginPath(); X.moveTo(-8,-1); X.quadraticCurveTo(-13,-3-sw,-14,-7); X.stroke();
+  X.fillStyle='#7a5433'; X.beginPath(); X.ellipse(8.5,-2.5,4.4,3.6,0,0,7); X.fill();
+  X.fillStyle='#3a2a1c';
+  X.beginPath(); X.moveTo(7,-5.4);   X.lineTo(8.4,-9.6);  X.lineTo(9.8,-5.2); X.closePath(); X.fill();
+  X.beginPath(); X.moveTo(9.6,-5.6); X.lineTo(11.2,-9.2); X.lineTo(12,-4.8);  X.closePath(); X.fill();
+  X.fillStyle='#241a12'; X.beginPath(); X.ellipse(12.4,-1.8,1.7,1.4,0,0,7); X.fill();
+  X.restore();
+}
 function drawTower(t,ghost){
   if(t.key==='tank'){ drawTank(t,ghost); return; }
+  if(t.key==='spikes'){ drawStripCar(t,ghost); return; }
   const look=TLOOK[t.key], dis=t.disabled>G.time;
   X.save(); if(ghost) X.globalAlpha=.6;
   drawPad(t);
@@ -1789,7 +2068,7 @@ function drawVan(e,p){
 function drawEnemy(e){
   const p=epos(e), t=G.time;
   const hidden = e.stealth && !G.globalDetect &&
-    !G.towers.some(w=>(w.detect||w.bDet)&&Math.hypot(w.x-p.x,w.y-p.y)<=w.range);
+    !G.towers.some(w=>(w.detect||w.bDet)&&Math.hypot(w.x-p.x,w.y-p.y)<=eRange(w));
   X.save();
   if(hidden) X.globalAlpha=.34;
   if(e.type==='van'){ drawVan(e,p); }
@@ -1918,24 +2197,27 @@ function render(){
       X.fillStyle=ok?'rgba(90,230,150,.3)':'rgba(255,77,94,.34)';
       X.fillRect(h.c*CS,h.r*CS,CS,CS);
       X.strokeStyle=ok?'#4ade80':'#ff4d5e'; X.lineWidth=2; X.strokeRect(h.c*CS+1,h.r*CS+1,CS-2,CS-2);
-      if(ok) drawTower({key:G.place,def:TOWERS[G.place],x:(h.c+.5)*CS,y:(h.r+.5)*CS,ang:0,up:[0,0],disabled:0},true);
+      if(ok) drawTower({key:G.place,def:TOWERS[G.place],x:(h.c+.5)*CS,y:(h.r+.5)*CS,ang:0,up:[0,0],disabled:0,
+        roadAng:posAt(pathDistNear((h.c+.5)*CS,(h.r+.5)*CS)).ang},true);
     }
   }
   if(G.sel){
-    if(G.sel.range<900){
-      X.fillStyle='rgba(63,169,255,.09)'; X.beginPath(); X.arc(G.sel.x,G.sel.y,G.sel.range,0,7); X.fill();
+    if(eRange(G.sel)<900){
+      X.fillStyle='rgba(63,169,255,.09)'; X.beginPath(); X.arc(G.sel.x,G.sel.y,eRange(G.sel),0,7); X.fill();
       X.strokeStyle='rgba(63,169,255,.55)'; X.lineWidth=2; X.stroke();
     }
     X.strokeStyle='#3fa9ff'; X.lineWidth=1.6; X.strokeRect(G.sel.cx*CS+1,G.sel.cy*CS+1,CS-2,CS-2);
   }
-  /* Super Hero auras stay drawn so you can see which units are standing in one */
+  /* Support auras stay drawn so you can see which units are standing in one */
   for(const s of G.towers){
     if(!s.support) continue;
-    X.fillStyle='rgba(255,204,77,'+(.05+Math.sin(G.time*2+s.x)*.018).toFixed(3)+')';
+    const ac=s.def.auraCol||'#ffcc4d';
+    X.fillStyle=hexA(ac,(.05+Math.sin(G.time*2+s.x)*.018).toFixed(3));
     X.beginPath(); X.arc(s.x,s.y,s.range,0,7); X.fill();
-    X.strokeStyle='rgba(255,204,77,.30)'; X.lineWidth=1.5; X.stroke();
+    X.strokeStyle=hexA(ac,.30); X.lineWidth=1.5; X.stroke();
   }
   for(const f of G.fx) if(f.type==='pool') drawFx(f);
+  for(const s of G.strips) drawStrip(s);
   /* depth-sorted actors */
   const act=[];
   for(const t of G.towers) act.push({y:t.y,d:()=>drawTower(t,false)});
@@ -2096,13 +2378,38 @@ function renderSel(){
   let h=`<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
       <span class="ic" style="width:28px;height:28px;display:grid;place-items:center;background:#0c1119;border:1px solid var(--line);border-radius:6px">${t.def.icon}</span>
       <b>${t.def.name}</b></div>`;
-  if(t.spawner){
+  if(t.stripCar){
+    const live=G.strips.filter(x=>x.src===t).length;
+    h+=`<div class="kv"><span>Damage a crossing</span><b>${eDmg(t).toFixed(0)} (AP)</b></div>
+        <div class="kv"><span>Leaves them</span><b>${Math.round(t.stripSlow*100)}% slower for ${t.stripSlowT.toFixed(1)}s</b></div>
+        <div class="kv"><span>Strips down</span><b>${live} / ${t.maxStrips}</b></div>
+        <div class="kv"><span>A fresh one every</span><b>${t.regen.toFixed(1)}s</b></div>
+        <div class="kv"><span>Kills</span><b>${t.kills}</b></div>
+        <div style="font-size:11px;color:var(--acc);margin:4px 0">one baddy wrecks a strip &middot; punctures armour &middot; catches Terrorists too</div>`;
+  } else if(t.dogs){
+    h+=`<div class="kv"><span>Bite</span><b>${eDmg(t).toFixed(0)}</b></div>
+        <div class="kv"><span>Pins them for</span><b>${(t.stun||0).toFixed(1)}s</b></div>
+        <div class="kv"><span>Dogs sent</span><b>${Math.max(1,t.shots)} every ${(1/eRate(t)).toFixed(1)}s</b></div>
+        <div class="kv"><span>Runs down the road</span><b>${Math.round(t.dogLeash)}</b></div>
+        ${t.mark?`<div class="kv"><span>Bitten baddies take</span><b>+${Math.round((t.mark-1)*100)}% damage</b></div>`:''}
+        <div class="kv"><span>Kills</span><b>${t.kills}</b></div>
+        <div style="font-size:11px;color:var(--acc);margin:4px 0">the dog smells Terrorists &middot; the bite is meant to stop them, not kill them</div>`;
+  } else if(t.spawner){
     h+=`<div class="kv"><span>Damage per man</span><b>${eDmg(t).toFixed(0)}</b></div>
         <div class="kv"><span>Men sent</span><b>${Math.max(1,t.shots)} every ${(1/eRate(t)).toFixed(1)}s</b></div>
         <div class="kv"><span>Each man survives</span><b>${t.manPierce} crash${t.manPierce>1?'es':''}</b></div>
         <div class="kv"><span>Marching speed</span><b>${t.manSpeed}</b></div>
         <div class="kv"><span>Kills</span><b>${t.kills}</b></div>
         <div style="font-size:11px;color:var(--red);margin:4px 0">cannot see Terrorists</div>`;
+  } else if(t.support && !t.heroPunch){
+    const inAura=G.towers.filter(o=>o!==t && Math.hypot(o.x-t.x,o.y-t.y)<=t.range).length;
+    h+=`<div class="kv"><span>Own damage</span><b>none</b></div>
+        <div class="kv"><span>Aura radius</span><b>${Math.round(t.range)}</b></div>
+        <div class="kv"><span>Ally fire rate</span><b>+${Math.round(t.buffRate*100)}%</b></div>
+        <div class="kv"><span>Ally range</span><b>+${Math.round(t.buffRange*100)}%</b></div>
+        ${t.buffDmg?`<div class="kv"><span>Ally damage</span><b>+${Math.round(t.buffDmg*100)}%</b></div>`:''}
+        <div class="kv"><span>Units in aura</span><b>${inAura}</b></div>`;
+    if(t.buffDetect) h+=`<div style="font-size:11px;color:var(--acc);margin:4px 0">allies in aura can hit Terrorists</div>`;
   } else if(t.support){
     h+=`<div class="kv"><span>Punch damage</span><b>none</b></div>
         <div class="kv"><span>Punch slows by</span><b>${Math.round(t.slow*100)}% for ${t.slowT.toFixed(1)}s</b></div>
@@ -2119,7 +2426,7 @@ function renderSel(){
   }else{
     h+=`<div class="kv"><span>Damage</span><b>${eDmg(t).toFixed(1)}${t.pierce?' (AP)':''}${t.bDmg?' ↑':''}</b></div>
         <div class="kv"><span>Fire rate</span><b>${eRate(t).toFixed(2)}/s${t.bRate?' ↑':''}</b></div>
-        <div class="kv"><span>Range</span><b>${t.range>=900?'whole map':Math.round(t.range)}</b></div>
+        <div class="kv"><span>Range</span><b>${eRange(t)>=900?'whole map':Math.round(eRange(t))}${t.bRange?' ↑':''}</b></div>
         <div class="kv"><span>DPS (single)</span><b>${(eDmg(t)*eRate(t)*t.shots*Math.max(1,t.multi)).toFixed(0)}</b></div>
         <div class="kv"><span>Kills</span><b>${t.kills}</b></div>`;
     const tags=[];
@@ -2985,11 +3292,14 @@ function mpSnap(){
   const bl=[];
   for(const b of G.bullets) bl.push([Math.round(b.x),Math.round(b.y),Math.round(b.tx),Math.round(b.ty),b.arc?1:0]);
   const ar=[];
-  for(const a of G.army) if(a.x!==undefined) ar.push([Math.round(a.x),Math.round(a.y),Math.round(a.ang*100)/100]);
+  for(const a of G.army) if(a.x!==undefined)
+    ar.push([Math.round(a.x),Math.round(a.y),Math.round(a.ang*100)/100,a.dog?(a.back?2:1):0]);
+  const sk=[];
+  for(const st of G.strips) sk.push([Math.round(st.x),Math.round(st.y),Math.round(st.ang*100)/100]);
   const s={k:'s', t:T, $:Math.round(G.cash), i:Math.round(G.integ*10)/10, w:G.wave,
     r:G.running?1:0, o:G.over?1:0, pz:G.paused?1:0, sp:G.speed,
     ki:G.kills, lk:G.leaked, rp:G.repairs, be:G.bossEsc,
-    gd:G.globalDetect?1:0, e:en, u:tw, b:bl, a:ar,
+    gd:G.globalDetect?1:0, e:en, u:tw, b:bl, a:ar, sk:sk,
     bs: (G.boss&&G.boss.alive)?[Math.round(G.boss.hp),Math.round(G.boss.max),G.boss.k]:null};
   if(MP.fxQ.length){ s.f=MP.fxQ; MP.fxQ=[]; }
   if(MP.evQ.length){ s.v=MP.evQ; MP.evQ=[]; }
@@ -3147,9 +3457,12 @@ function mpApply(s){
   for(let i=0;i<s.a.length;i++){
     const r=s.a[i]; let a=G.army[i];
     if(!a){ a={x:r[0],y:r[1],ang:r[2],ph:Math.random()}; G.army[i]=a; }
-    a.x=r[0]; a.y=r[1]; a.ang=r[2];
+    a.x=r[0]; a.y=r[1]; a.ang=r[2]; a.dog=r[3]>0; a.back=r[3]===2;
   }
   G.army.length=s.a.length;
+
+  /* spike strips — the guest only ever draws them */
+  G.strips = (s.sk||[]).map(r=>({x:r[0],y:r[1],ang:r[2],left:1,max:1}));
 
   /* cosmetic effects the host generated */
   if(s.f) for(const f of s.f){
@@ -3273,7 +3586,7 @@ function stepSim(dt){
   let total=dt*G.speed;
   while(total>0){
     const s=Math.min(total,1/60); total-=s; G.time+=s;
-    updateWave(s); updateTowers(s); updateBullets(s); updateArmy(s); updateEnemies(s); updateFx(s); updateParts(s);
+    updateWave(s); updateTowers(s); updateBullets(s); updateArmy(s); updateStrips(); updateEnemies(s); updateFx(s); updateParts(s);
     if(G.over) break;
   }
 }
@@ -3419,7 +3732,7 @@ addEventListener('keydown',e=>{
   const k=e.key.toLowerCase();
   if(G.mode==='menu') return;
   if(G.mode==='cut'){ if(k===' '||k==='escape'||k==='enter') { e.preventDefault(); skipCut(); } return; }
-  if(k>='1'&&k<='6'){ const key=TKEYS[+k-1]; G.place=G.place===key?null:key; G.sel=null; renderShop(); renderSel(); }
+  if(k>='1'&&k<='9'&&+k<=TKEYS.length){ const key=TKEYS[+k-1]; G.place=G.place===key?null:key; G.sel=null; renderShop(); renderSel(); }
   else if(k==='escape'){ G.place=null; G.sel=null; renderShop(); renderSel(); }
   else if(k===' '){ e.preventDefault(); startWave(); }
   else if(k==='s'&&G.sel){ sellSel(); }
