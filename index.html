@@ -48,7 +48,23 @@
   #side{width:330px; flex:0 0 330px; display:flex; flex-direction:column; gap:10px}
   .card{background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:10px}
   .card h3{margin:0 0 8px; font-size:11px; letter-spacing:.18em; color:var(--dim); text-transform:uppercase}
-  .shop{display:flex; flex-direction:column; gap:6px}
+  /* The roster outgrew the column. Let the unit list scroll inside its own card
+     so the battlefield keeps its place instead of being pushed off the screen —
+     picking a unit should never cost you sight of the map. */
+  .shop{display:flex; flex-direction:column; gap:6px;
+        max-height:min(44vh,400px); overflow-y:auto; overscroll-behavior:contain;
+        padding-right:5px; scrollbar-width:thin; scrollbar-color:#33415a transparent}
+  .shop::-webkit-scrollbar{width:8px}
+  .shop::-webkit-scrollbar-track{background:transparent}
+  .shop::-webkit-scrollbar-thumb{background:#2b3648; border-radius:99px;
+        border:2px solid var(--panel)}
+  .shop::-webkit-scrollbar-thumb:hover{background:#3b4a63}
+  /* a soft edge at the bottom, so a half-hidden row reads as "more below" */
+  .shopWrap{position:relative}
+  .shopWrap::after{content:''; position:absolute; left:0; right:5px; bottom:0; height:22px;
+        background:linear-gradient(180deg,transparent,var(--panel)); pointer-events:none;
+        opacity:0; transition:opacity .18s}
+  .shopWrap.more::after{opacity:1}
   .tw{
     display:flex; gap:9px; align-items:center; text-align:left; padding:7px 9px; width:100%;
   }
@@ -163,6 +179,7 @@
     canvas{width:100%; max-height:none}
     #side{width:100%; flex:1 1 auto; flex-direction:row; flex-wrap:wrap;
           max-height:none; overflow:visible}
+    .shop{max-height:min(52vh,440px)}
     #side .card{flex:1 1 300px; min-width:0}
   }
   @media (max-width:620px){
@@ -211,7 +228,7 @@
   <div id="side">
     <div class="card">
       <h3>Deployable Units</h3>
-      <div class="shop" id="shop"></div>
+      <div class="shopWrap" id="shopWrap"><div class="shop" id="shop"></div></div>
     </div>
     <div class="card" id="cSel">
       <h3>Selected Unit</h3>
@@ -2359,6 +2376,7 @@ function taunt(txt,vo){
 }
 function renderShop(){
   const s=$('shop'); s.innerHTML='';
+  if(!s.dataset.hooked){ s.dataset.hooked='1'; s.addEventListener('scroll', shopHint, {passive:true}); }
   TKEYS.forEach((k,i)=>{
     const d=TOWERS[k], price=unitCost(k), poor=G.cash<price;
     const b=document.createElement('button');
@@ -2370,7 +2388,18 @@ function renderShop(){
       G.place = G.place===k?null:k; G.sel=null; renderShop(); renderSel(); };
     s.appendChild(b);
   });
+  shopHint();
 }
+/* Show the bottom fade only while there is genuinely something below, and drop
+   it once the list is scrolled to the end — a permanent fade would just look
+   like a smudge on a roster that already fits. */
+function shopHint(){
+  const s=$('shop'), w=$('shopWrap');
+  if(!s||!w) return;
+  const more = s.scrollHeight - s.scrollTop - s.clientHeight > 4;
+  w.classList.toggle('more', more);
+}
+window.addEventListener('resize', shopHint);
 function renderSel(){
   const box=$('selBody'), t=G.sel;
   if(!t){ box.innerHTML='<div style="color:var(--dim);font-size:12px">Click a deployed unit to inspect and upgrade it.</div>'; return; }
